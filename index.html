@@ -211,7 +211,24 @@
         </div>
     </div>
 
-    <script src="script.js?v=2.0"></script>
+    <script>
+        // Modal functions (Inlined as fallback for Vercel)
+        window.openVendedorModal = function() {
+            const modal = document.getElementById('vendedorModal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        };
+        window.closeVendedorModal = function() {
+            const modal = document.getElementById('vendedorModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        };
+    </script>
+    <script src="script.js?v=3.0"></script>
 </body>
 
 </html>
