@@ -3,7 +3,7 @@
    ═══════════════════════════════════════════════ */
 
 // ─── Vendedor Modal ───
-window.openVendedorModal = function() {
+const openVendedorModal = () => {
     const modal = document.getElementById('vendedorModal');
     if (modal) {
         modal.classList.add('active');
@@ -11,13 +11,17 @@ window.openVendedorModal = function() {
     }
 };
 
-window.closeVendedorModal = function() {
+const closeVendedorModal = () => {
     const modal = document.getElementById('vendedorModal');
     if (modal) {
         modal.classList.remove('active');
         document.body.style.overflow = '';
     }
 };
+
+// Make functions global for HTML onclicks
+window.openVendedorModal = openVendedorModal;
+window.closeVendedorModal = closeVendedorModal;
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -54,25 +58,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const navMenu = document.getElementById('nav-menu');
 
     if (navToggle && navMenu) {
-        navToggle.addEventListener('click', () => {
-            navToggle.classList.toggle('active');
-            navMenu.classList.toggle('open');
-            document.body.style.overflow = navMenu.classList.contains('open') ? 'hidden' : '';
+        const toggleMenu = (show) => {
+            const isOpening = show !== undefined ? show : !navMenu.classList.contains('open');
+            navToggle.classList.toggle('active', isOpening);
+            navMenu.classList.toggle('open', isOpening);
+            
+            // Only toggle body scroll if modal is NOT open
+            const modal = document.getElementById('vendedorModal');
+            if (modal && !modal.classList.contains('active')) {
+                document.body.style.overflow = isOpening ? 'hidden' : '';
+            }
+        };
+
+        navToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleMenu();
         });
 
         navMenu.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                navToggle.classList.remove('active');
-                navMenu.classList.remove('open');
-                document.body.style.overflow = '';
-            });
+            link.addEventListener('click', () => toggleMenu(false));
         });
 
         document.addEventListener('click', (e) => {
             if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
-                navToggle.classList.remove('active');
-                navMenu.classList.remove('open');
-                document.body.style.overflow = '';
+                toggleMenu(false);
             }
         });
     }

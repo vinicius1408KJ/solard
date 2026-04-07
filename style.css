@@ -46,6 +46,10 @@
     --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.mobile-only {
+    display: none;
+}
+
 /* ─── Reset ─── */
 *, *::before, *::after {
     margin: 0;
@@ -805,6 +809,31 @@ img { max-width: 100%; display: block; }
     .logo-tagline {
         font-size: 0.55rem;
         letter-spacing: 0.2em;
+    }
+
+    .mobile-only {
+        display: block !important;
+        width: 100%;
+        margin-top: 1.5rem;
+    }
+
+    .nav-cta-mobile {
+        width: 100%;
+        padding: 1rem;
+        background: linear-gradient(135deg, var(--green-500), var(--green-400));
+        color: var(--navy-900);
+        border: none;
+        border-radius: 12px;
+        font-family: var(--font-heading);
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .nav-cta-mobile:active {
+        transform: scale(0.98);
+        filter: brightness(0.9);
     }
 
     .hero {
